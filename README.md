@@ -90,3 +90,7 @@
 
 - docker container run -it --env VAR=VALUE -e VAR2=VALUE2 nginx sh
 - docker container run -it --env-file .env nginx sh
+
+## save and load images
+- docker save -o IMAGE_NAME my-image.tar
+- docker load -i my-image.tar
