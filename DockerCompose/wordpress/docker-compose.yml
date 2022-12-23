@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  database:
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - database_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+    networks:
+      - wpnet
+
+  wordpress:
+    image: wordpress:latest
+    depends_on:
+      - database
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      WORDPRESS_DB_HOST: database:3306
+      WORDPRESS_DB_USER: test
+      WORDPRESS_DB_PASSWORD: test
+      WORDPRESS_DB_NAME: test
+    networks:
+      - wpnet
+
+volumes:
+  database_data: {}
+
+networks:
+  wpnet:
+    driver: bridge
