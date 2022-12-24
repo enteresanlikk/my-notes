@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    image: ozgurozturknet/webdb
+    environment:
+      MYSQL_DATABASE: proje
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_ROOT_PASSWORD: test
+    networks:
+      - webnet
+
+  websrv:
+    image: ozgurozturknet/webkayit
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
+        order: stop-first
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - mysqldb
+    ports:
+      - "80:80"
+    restart: always
+    networks:
+      - webnet
+    environment:
+      DB_SERVER: mysqldb
+      DB_USERNAME: test
+      DB_PASS: test
+      DB_NAME: test
+
+networks:
+  webnet:
+    driver: overlay
