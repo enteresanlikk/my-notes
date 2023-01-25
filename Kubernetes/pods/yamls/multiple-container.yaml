@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-multiple-container
+spec:
+  containers:
+  - name: web-container
+    image: nginx
+    ports:
+      - containerPort: 80
+    volumeMounts:
+    - name: sharedvolume
+      mountPath: /usr/share/nginx/html
+  - name: sidecar-container
+    image: busybox
+    command: ["/bin/sh"]
+    args: ["-c", "while true; do wget -O /var/log/index.html https://raw.githubusercontent.com/ozgurozturknet/hello-world/master/index.html; sleep 15; done"]
+    volumeMounts:
+    - name: sharedvolume
+      mountPath: /var/log
+  volumes:
+  - name: sharedvolume
+    emptyDir: {}
