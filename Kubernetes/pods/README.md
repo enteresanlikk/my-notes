@@ -21,6 +21,12 @@
     - "app=firstapp,tier=backend"
     - "app, tier"
 - kubectl label pods first-pod app=firstapp
+- kubectl annotate pods first-pod owner=Bilal
+- kubectl create namespace dev
+- kubectl get namespaces
+- kubectl get pods --namespace dev
+- kubectl config set-context --current --namespace=dev
+- kubectl delete namespace dev
 
 ## yaml
 ### content structure
