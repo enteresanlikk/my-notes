@@ -1,4 +1,5 @@
-# Kubernetes (k8s) [kubernetes.io](https://kubernetes.io) 
+# Kubernetes (k8s) [kubernetes.io](https://kubernetes.io)
+- [Udemy Course](https://www.udemy.com/course/kubernetes-temelleri/)
 - container orchestration system
 - open source
 - [cncf.io](https://cncf.io) project
