@@ -1,0 +1,2 @@
+# statefulsets
+- <pod>.<statefulset>

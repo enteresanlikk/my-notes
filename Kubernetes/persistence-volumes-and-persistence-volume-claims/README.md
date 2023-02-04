@@ -1,4 +1,4 @@
-# persistence volume and persistence volume claim
+# persistence volumes and persistence volume claims
 - CSI driver (Container Storage Interface)
 - Nfs (Network File System)
 

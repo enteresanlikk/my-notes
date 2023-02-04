@@ -1,4 +1,4 @@
-# daemonset
+# daemonsets
 - logging
 - storage
 - monitoring
