@@ -27,3 +27,7 @@
     - Strategy Pattern
     - State Pattern
     - Visitor Pattern
+
+# Resources
+- [https://github.com/yusufyilmazfr/tasarim-desenleri-turkce-kaynak](https://github.com/yusufyilmazfr/tasarim-desenleri-turkce-kaynak)
+- [https://github.com/salihcantekin/youtube_DesignPatterns_Builder](https://github.com/salihcantekin/youtube_DesignPatterns_Builder)
