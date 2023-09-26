@@ -1,38 +1,62 @@
-version: "3.8"
+version: '3.8'
+
+name: wordpress
 
 services:
-  database:
-    image: mysql:5.7
-    restart: always
-    volumes:
-      - database_data:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: test
-      MYSQL_USER: test
-      MYSQL_PASSWORD: test
-    networks:
-      - wpnet
-
-  wordpress:
-    image: wordpress:latest
-    depends_on:
-      - database
+  s_database:
+    container_name: c_mysql
+    image: mysql
     restart: always
     ports:
-      - "80:80"
-      - "443:443"
+      - 3306:3306
+    volumes:
+      - v_database:/var/lib/mysql
+    command: --max_allowed_packet=32505856 # Set max_allowed_packet to 256M (or any other value)
     environment:
-      WORDPRESS_DB_HOST: database:3306
-      WORDPRESS_DB_USER: test
-      WORDPRESS_DB_PASSWORD: test
-      WORDPRESS_DB_NAME: test
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
     networks:
-      - wpnet
+      - n_wordpress
+
+  s_phpmyadmin:
+    container_name: c_phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 9090:80
+    environment:
+      PMA_HOST: s_database
+      PMA_USER: wordpress
+      PMA_PASSWORD: wordpress
+    networks:
+      - n_wordpress
+    depends_on:
+      - s_database
+
+  s_wordpress:
+    container_name: c_wordpress
+    image: wordpress
+    restart: always
+    ports:
+      - 3030:80
+    volumes:
+      - ./:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: s_database
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    networks:
+      - n_wordpress
+    depends_on:
+      - s_database
+      - s_phpmyadmin
 
 volumes:
-  database_data: {}
+    v_database: {}
 
 networks:
-  wpnet:
+  n_wordpress:
     driver: bridge
